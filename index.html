@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Flexi predictor 4.0 | LUXURY QUANTUM EDITION</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --primary: #2E3A2F;
+      --secondary: #6B7F5B;
+      --tertiary: #D9C9B2;
+      --accent: #C96F4F;
+      --bg: #F8F6EE;
+      --surface-glass: rgba(255, 255, 255, 0.65);
+      --surface-glass-subtle: rgba(255, 255, 255, 0.45);
+      --surface-glass-border: rgba(255, 255, 255, 0.8);
+      --card-shadow: 0 16px 36px -10px rgba(46, 58, 47, 0.12), 0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+      --dock-shadow: 0 20px 45px -8px rgba(46, 58, 47, 0.22);
+      --success: #3A7D44;
+      --danger: #C94F4F;
+      --gold: #D4AF37;
+      --radius-xl: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      font-family: 'Outfit', sans-serif;
+      color: var(--primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.5rem;
+      padding-bottom: 120px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: 'El Messiri', serif;
+    }
+
+    /* === ANIMATED SPLASH SCREEN (3s) === */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: radial-gradient(circle at 50% 30%, #374639 0%, #202921 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+      overflow: hidden;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-logo-box {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, rgba(217,201,178,0.25), rgba(201,111,79,0.3));
+      border: 1px solid rgba(217,201,178,0.4);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      animation: splashPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes splashPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 15px 35px rgba(0,0,0,0.35); }
+      50% { transform: scale(1.05); box-shadow: 0 20px 45px rgba(201,111,79,0.35); }
+    }
+
+    .splash-bar-container {
+      width: 180px;
+      height: 4px;
+      background: rgba(217,201,178,0.2);
+      border-radius: 4px;
+      margin-top: 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .splash-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--tertiary), var(--accent));
+      animation: fillBar 2.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes fillBar {
+      0% { width: 0%; }
+      50% { width: 65%; }
+      100% { width: 100%; }
+    }
+
+    /* === AURORA BACKGROUND & PARTICLES === */
+    #bg-aurora-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      overflow: hidden;
+      background: #F8F6EE;
+    }
+
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.55;
+      animation: floatAurora 18s ease-in-out infinite alternate;
+    }
+
+    .aurora-1 {
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(107, 127, 91, 0.35) 0%, transparent 70%);
+      top: -120px;
+      left: -100px;
+    }
+
+    .aurora-2 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(201, 111, 79, 0.22) 0%, transparent 70%);
+      top: 25%;
+      right: -120px;
+      animation-duration: 22s;
+    }
+
+    .aurora-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(217, 201, 178, 0.5) 0%, transparent 70%);
+      bottom: -80px;
+      left: 20%;
+      animation-duration: 20s;
+    }
+
+    @keyframes floatAurora {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 30px) scale(1.08); }
+      100% { transform: translate(-30px, 50px) scale(0.96); }
+    }
+
+    #particles-js {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* === LUXURY GLASS CARDS === */
+    .card-premium {
+      background: var(--surface-glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .card-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 42px -10px rgba(46, 58, 47, 0.16), 0 0 1px 1px rgba(255, 255, 255, 1) inset;
+    }
+
+    .card-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(107, 127, 91, 0.4), var(--accent), transparent);
+    }
+
+    /* === HEADER LUXURY STYLING === */
+    header {
+      position: relative;
+      z-index: 10;
+      margin-bottom: 1.25rem;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .luxury-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 1rem;
+      background: rgba(107, 127, 91, 0.14);
+      border: 1px solid rgba(107, 127, 91, 0.25);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #2E3A2F 0%, #4D5E4E 50%, #C96F4F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: #6B7F5B;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.35rem;
+    }
+
+    /* === SHIMMER & RIPPLE BUTTONS === */
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shimmer-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: rotate(25deg);
+      animation: shimmerLoop 4s infinite;
+    }
+
+    @keyframes shimmerLoop {
+      0% { left: -70%; }
+      30%, 100% { left: 140%; }
+    }
+
+    .ripple-el {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple-wave {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      background-color: rgba(255, 255, 255, 0.5);
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2E3A2F, #3e4e3f);
+      color: #F8F6EE;
+      border: 1px solid rgba(217, 201, 178, 0.3);
+      padding: 0.8rem 1.6rem;
+      border-radius: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 24px -6px rgba(46, 58, 47, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -6px rgba(46, 58, 47, 0.45);
+    }
+
+    .btn-danger {
+      background: rgba(201, 79, 79, 0.12);
+      border: 1px solid rgba(201, 79, 79, 0.3);
+      color: var(--danger);
+      padding: 0.65rem 1.3rem;
+      border-radius: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -4px rgba(201, 79, 79, 0.4);
+    }
+
+    /* === DASHBOARD DISPLAYS === */
+    .period-display {
+      font-size: 1.65rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 0.65rem 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      letter-spacing: 3px;
+      border: 1px solid rgba(107, 127, 91, 0.25);
+      color: var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .prediction-display {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2E3A2F, #485b4a);
+      color: #F8F6EE;
+      padding: 0.65rem 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(46, 58, 47, 0.35);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid rgba(217, 201, 178, 0.3);
+    }
+
+    .signal-meter {
+      height: 10px;
+      background: rgba(107, 127, 91, 0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.6rem;
+      border: 1px solid rgba(107, 127, 91, 0.2);
+      padding: 1px;
+    }
+
+    .signal-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #6B7F5B, #C96F4F);
+      box-shadow: 0 0 10px rgba(201, 111, 79, 0.5);
+      transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .strategy-tag {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: rgba(107, 127, 91, 0.12);
+      border: 1px solid rgba(107, 127, 91, 0.25);
+      color: var(--primary);
+    }
+
+    /* === VIP FLOATING GLASS DOCK === */
+    nav {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 34px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.45rem 0.6rem;
+      width: calc(100% - 2.5rem);
+      max-width: 410px;
+      box-shadow: var(--dock-shadow);
+      z-index: 1000;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: #7d8e7c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 24px;
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    nav button.active {
+      background: var(--primary);
+      color: #F8F6EE;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 22px -4px rgba(46, 58, 47, 0.38);
+    }
+
+    nav button.active i {
+      color: var(--tertiary);
+    }
+
+    /* === PAGE TRANSITIONS === */
+    main {
+      flex-grow: 1;
+      max-width: 680px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 0 1.1rem;
+      z-index: 10;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: tabSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes tabSlideUp {
+      from { opacity: 0; transform: translateY(14px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* === HISTORY LUXURY CARDS === */
+    #historyContainer {
+      max-height: 440px;
+      overflow-y: auto;
+      padding-right: 4px;
+      margin-top: 0.75rem;
+    }
+
+    #historyContainer::-webkit-scrollbar { width: 5px; }
+    #historyContainer::-webkit-scrollbar-track { background: transparent; }
+    #historyContainer::-webkit-scrollbar-thumb {
+      background: rgba(107, 127, 91, 0.3);
+      border-radius: 10px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.05rem 1.25rem;
+      margin-bottom: 0.75rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 6px 18px -4px rgba(46, 58, 47, 0.05);
+      transition: all 0.25s ease;
+    }
+
+    .history-item:hover {
+      transform: translateX(4px);
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .win-item { border-left: 5px solid var(--success); }
+    .loss-item { border-left: 5px solid var(--danger); }
+    .pending-item { border-left: 5px solid var(--secondary); }
+    
+    .jackpot-item {
+      border: 1.5px solid var(--gold);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(212, 175, 55, 0.15));
+      box-shadow: 0 10px 24px -4px rgba(212, 175, 55, 0.25);
+    }
+
+    /* === PERFORMANCE & STATS GRIDS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 22px;
+      padding: 1.2rem;
+      text-align: center;
+      box-shadow: 0 6px 16px -4px rgba(46, 58, 47, 0.04);
+      transition: transform 0.25s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .stat-box.full {
+      grid-column: span 2;
+    }
+
+    /* === NOTIFICATIONS === */
+    #predictionNotify {
+      position: fixed;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(-120px);
+      background: rgba(46, 58, 47, 0.92);
+      color: #F8F6EE;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid rgba(217, 201, 178, 0.35);
+      backdrop-filter: blur(14px);
+    }
+
+    #predictionNotify.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #jackpotNotify {
+      background: linear-gradient(135deg, #2E3A2F, #C96F4F);
+      color: #FFF;
+      border: 1px solid var(--gold);
+      box-shadow: 0 15px 35px rgba(201, 111, 79, 0.4);
+    }
+
+    /* === MODAL === */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(46, 58, 47, 0.45);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10001;
+      padding: 1rem;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: rgba(248, 246, 238, 0.95);
+      backdrop-filter: blur(28px);
+      padding: 2.2rem;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      text-align: center;
+      position: relative;
+      transform: scale(0.94);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal.open .modal-content {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: #7d8e7c;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    /* Sparkle Particle */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      width: 18px;
+      height: 18px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23C96F4F'%3E%3Cpath d='M12,1.5L9,9H1.5L7.5,14.25L4.5,22.5L12,17.25L19.5,22.5L16.5,14.25L22.5,9H15L12,1.5Z'/%3E%3C/svg%3E") no-repeat center/contain;
+      opacity: 0;
+      animation: sparkle 0.8s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes sparkle {
+      0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.8) rotate(140deg); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 3-SECOND LUXURY SPLASH SCREEN -->
+  <div id="splash-screen">
+    <div class="splash-logo-box">
+      <i class="fa-solid fa-gem text-3xl" style="color: #D9C9B2;"></i>
+    </div>
+    <h1 class="text-2xl font-bold mt-5 tracking-wide text-white" style="color: #F8F6EE;">FLEXI QUANTUM</h1>
+    <p class="text-xs tracking-widest mt-1 uppercase" style="color: #D9C9B2;">Advanced Intelligence V5.0</p>
+    <div class="splash-bar-container">
+      <div class="splash-bar-fill"></div>
+    </div>
+  </div>
+
+  <!-- AMBIENT BACKGROUND & PARTICLES -->
+  <div id="bg-aurora-wrap">
+    <div class="aurora-blob aurora-1"></div>
+    <div class="aurora-blob aurora-2"></div>
+    <div class="aurora-blob aurora-3"></div>
+  </div>
+  <div id="particles-js"></div>
+
+  <!-- NOTIFICATION TOAST -->
+  <div id="predictionNotify"><i class="fa-solid fa-star" style="color: var(--tertiary);"></i><span id="notifyText"></span></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="luxury-badge">
+      <i class="fa-solid fa-circle-nodes" style="color: var(--accent);"></i>
+      <span>Quantum Core Active</span>
+    </div>
+    <h1 class="header-title">Flexi Predictor 4.0</h1>
+    <p class="subtitle">Neural Market Matrix · Ultra Edition</p>
+  </header>
+
+  <!-- MAIN VIEWPORT -->
+  <main>
+    <!-- TAB 1: HOME DASHBOARD -->
+    <section id="tab-home" class="tab-content active w-full">
+      <!-- Main Live Card -->
+      <div class="card-premium p-6 w-full mb-6">
+        <div class="flex flex-col md:flex-row justify-around items-center gap-5 mb-5">
+          <div class="w-full md:w-1/2 text-center md:text-left">
+            <h2 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center justify-center md:justify-start gap-2" style="color: var(--secondary);">
+              <i class="fa-solid fa-stopwatch text-sm" style="color: var(--accent);"></i> Target Period
+            </h2>
+            <div class="period-display font-mono" id="periodDisplay">----</div>
+          </div>
+          <div class="w-full md:w-1/2 text-center md:text-right">
+            <h2 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center justify-center md:justify-end gap-2" style="color: var(--secondary);">
+              <i class="fa-solid fa-wand-magic-sparkles text-sm" style="color: var(--accent);"></i> Predicted Output
+            </h2>
+            <div id="predictionDisplay" class="prediction-display shimmer-btn">
+              <span class="text-3xl font-extrabold">-</span> 
+              <span class="text-lg uppercase tracking-wider font-semibold">INITIALIZING</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Signal Strength Bar -->
+        <div class="mt-6 pt-5 border-t border-black/5">
+          <div class="flex justify-between items-center mb-1">
+            <p class="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style="color: var(--secondary);">
+              <i class="fa-solid fa-bolt" style="color: var(--accent);"></i> Signal Strength
+            </p>
+            <p id="signalStrengthDisplay" class="font-bold text-sm" style="color: var(--primary);">65.0% (NEUTRAL)</p>
+          </div>
+          <div class="signal-meter">
+            <div id="signalStrengthBar" class="signal-fill" style="width: 65%;"></div>
+          </div>
+        </div>
+
+        <!-- Regime & Strategy Chips -->
+        <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-black/5">
+          <div class="flex flex-col items-center sm:items-start p-2.5 rounded-2xl bg-white/40">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-stone-500 mb-1">Market Regime</span>
+            <span id="regimeDisplay" class="strategy-tag">NEUTRAL</span>
+          </div>
+          <div class="flex flex-col items-center sm:items-start p-2.5 rounded-2xl bg-white/40">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-stone-500 mb-1">Active Strategy</span>
+            <span id="strategyDisplay" class="strategy-tag">FALLBACK_STRATEGY</span>
+          </div>
+          <div class="flex flex-col items-center sm:items-start p-2.5 rounded-2xl bg-white/40">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-stone-500 mb-1">Win/Loss Streak</span>
+            <span id="streakDisplay" class="strategy-tag">0W / 0L</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status Indicators -->
+      <div class="card-premium p-6 w-full mb-6">
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2" style="color: var(--primary);">
+          <i class="fa-solid fa-server" style="color: var(--accent);"></i> Telemetry & Node Health
+        </h3>
+        <div class="grid grid-cols-2 gap-3.5">
+          <div class="p-3.5 rounded-2xl bg-white/50 border border-white/80">
+            <p class="text-[11px] uppercase tracking-wider font-bold text-stone-500">API Gateway</p>
+            <p class="font-bold flex items-center gap-2 mt-1 text-sm" id="apiStatus">
+              <i class="fa-solid fa-circle-notch fa-spin text-stone-400"></i> Connecting
+            </p>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-white/50 border border-white/80">
+            <p class="text-[11px] uppercase tracking-wider font-bold text-stone-500">Last Telemetry</p>
+            <p class="font-bold mt-1 text-sm font-mono" id="lastUpdateTime">--:--:--</p>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-white/50 border border-white/80">
+            <p class="text-[11px] uppercase tracking-wider font-bold text-stone-500">Manipulation Index</p>
+            <p class="font-bold mt-1 text-sm" id="manipulationStatus" style="color: var(--success);">Low</p>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-white/50 border border-white/80">
+            <p class="text-[11px] uppercase tracking-wider font-bold text-stone-500">Active AI Engines</p>
+            <p class="font-bold mt-1 text-sm" id="activeModels">0/10</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lottie Quantum Animation -->
+      <div class="card-premium p-4 w-full mb-6 flex justify-center items-center">
+        <lottie-player src="https://lottie.host/f1db8d57-befa-4043-817e-677e07b07f12/HNOJ98HKBr.json" background="transparent" speed="1" style="width: 220px; height: 220px;" loop autoplay></lottie-player>
+      </div>
+    </section>
+
+    <!-- TAB 2: HISTORY CARDS -->
+    <section id="tab-history" class="tab-content w-full">
+      <div class="card-premium p-6 w-full mb-6">
+        <div class="flex justify-between items-center mb-5">
+          <div>
+            <h3 class="text-xl font-bold flex items-center gap-2" style="color: var(--primary);">
+              <i class="fa-solid fa-clock-rotate-left" style="color: var(--accent);"></i> Audit Ledger
+            </h3>
+            <p class="text-xs text-stone-500 mt-0.5">Real-time resolution breakdown</p>
+          </div>
+          <button id="clearHistoryBtn" class="btn-danger ripple-el text-xs">
+            <i class="fa-solid fa-trash"></i> Clear Ledger
+          </button>
+        </div>
+        <div id="historyContainer">
+          <p class="text-center py-10 text-stone-400">
+            <i class="fa-solid fa-inbox mb-2 text-3xl"></i><br>No prediction history yet.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: STATS & ANALYTICS -->
+    <section id="tab-stats" class="tab-content w-full">
+      <div class="card-premium p-6 w-full mb-6">
+        <div class="text-center mb-6">
+          <h3 class="text-xl font-bold flex items-center justify-center gap-2" style="color: var(--primary);">
+            <i class="fa-solid fa-chart-pie" style="color: var(--accent);"></i> Predictive Analytics
+          </h3>
+          <p class="text-xs text-stone-500 mt-0.5">Comprehensive reinforcement track record</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <p class="text-3xl font-extrabold" style="color: var(--success);" id="statsWins">0</p>
+            <p class="text-xs uppercase tracking-wider font-semibold text-stone-500 mt-1 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-trophy text-emerald-600"></i> Wins
+            </p>
+          </div>
+          <div class="stat-box">
+            <p class="text-3xl font-extrabold" style="color: var(--danger);" id="statsLosses">0</p>
+            <p class="text-xs uppercase tracking-wider font-semibold text-stone-500 mt-1 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-shield-halved text-rose-600"></i> Losses
+            </p>
+          </div>
+          <div class="stat-box">
+            <p class="text-3xl font-extrabold" style="color: var(--gold);" id="statsJackpots">0</p>
+            <p class="text-xs uppercase tracking-wider font-semibold text-stone-500 mt-1 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-crown text-amber-500"></i> Jackpots
+            </p>
+          </div>
+          <div class="stat-box">
+            <p class="text-3xl font-extrabold text-stone-700" id="statsTotal">0</p>
+            <p class="text-xs uppercase tracking-wider font-semibold text-stone-500 mt-1 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-stone-500"></i> Total Resolved
+            </p>
+          </div>
+          <div class="stat-box full bg-gradient-to-br from-white/70 to-emerald-50/50">
+            <p class="text-4xl font-extrabold" style="color: var(--primary);" id="statsAccuracy">0.0%</p>
+            <p class="text-xs uppercase tracking-wider font-bold text-stone-500 mt-1 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-bullseye" style="color: var(--accent);"></i> Accuracy Confidence
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-7 bg-white/45 p-4.5 rounded-2xl border border-white/80">
+          <h4 class="text-sm font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--primary);">
+            <i class="fa-solid fa-microchip" style="color: var(--accent);"></i> Neural Engine Matrix Efficiency
+          </h4>
+          <div class="space-y-2.5" id="modelPerformanceList">
+            <!-- Dynamically injected via updateStats() -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DEVELOPER & PROTOCOL -->
+    <section id="tab-developer" class="tab-content w-full">
+      <div class="card-premium p-6 w-full mb-6">
+        <div class="flex flex-col items-center text-center mb-6">
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-[#2E3A2F] to-[#6B7F5B] flex items-center justify-center shadow-lg border-2 border-white/60 mb-3">
+            <i class="fa-solid fa-shield-cat text-3xl" style="color: var(--tertiary);"></i>
+          </div>
+          <h3 class="text-2xl font-bold" style="color: var(--primary);">VIP Security Core</h3>
+          <p class="text-xs tracking-wider uppercase font-semibold text-stone-500 mt-0.5">Verified Architecture by @Avtarshing</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white/45 border border-white/70 mb-5">
+          <p class="text-xs leading-relaxed text-stone-600">
+            Flexi Predictor V8 features 10 proprietary heuristic engines with dynamic regime locking, multi-depth memory scan, adaptive reinforcement weights, and harmonic resonance tracking.
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--primary);">
+            <i class="fa-solid fa-dna" style="color: var(--accent);"></i> Active Intelligence Modules
+          </h4>
+          <ul class="space-y-2 text-xs">
+            <li class="p-2.5 rounded-xl bg-white/40 border border-white/60 flex items-start gap-2.5">
+              <i class="fa-solid fa-brain mt-0.5" style="color: var(--accent);"></i>
+              <div><strong>10 AI Engines:</strong> Quantum Harmonic, Fibonacci, Wavelets, Markov Chains, Neural Ensemble & 5 Heuristic Cores.</div>
+            </li>
+            <li class="p-2.5 rounded-xl bg-white/40 border border-white/60 flex items-start gap-2.5">
+              <i class="fa-solid fa-compass-drafting mt-0.5" style="color: var(--accent);"></i>
+              <div><strong>7-Regime Locking:</strong> Real-time bull, bear, cyclic, choppy, and high-volatility adaptive calibration.</div>
+            </li>
+            <li class="p-2.5 rounded-xl bg-white/40 border border-white/60 flex items-start gap-2.5">
+              <i class="fa-solid fa-chart-line mt-0.5" style="color: var(--accent);"></i>
+              <div><strong>Streak Hunter:</strong> Dynamic exponential weighting for sequential consistency and mean reversion.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center mt-6">
+          <a href="https://t.me/+wRWyuhK0WzxjYjVl" target="_blank" class="btn-primary shimmer-btn ripple-el w-full">
+            <i class="fa-brands fa-telegram text-lg"></i> Contact VIP Developer
+          </a>
+        </div>
+
+        <div class="mt-4">
+          <form action="logout.php" method="POST" class="w-full">
+            <button type="submit" class="btn-danger w-full ripple-el">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Terminate Session
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING VIP GLASS DOCK -->
+  <nav>
+    <button class="tab-btn active ripple-el" data-tab="home">
+      <i class="fa-solid fa-house"></i>
+      <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+    </button>
+    <button class="tab-btn ripple-el" data-tab="history">
+      <i class="fa-solid fa-list-check"></i>
+      <span class="text-[10px] font-bold uppercase tracking-wider">Ledger</span>
+    </button>
+    <button class="tab-btn ripple-el" data-tab="stats">
+      <i class="fa-solid fa-chart-pie"></i>
+      <span class="text-[10px] font-bold uppercase tracking-wider">Stats</span>
+    </button>
+    <button class="tab-btn ripple-el" data-tab="developer">
+      <i class="fa-solid fa-user-shield"></i>
+      <span class="text-[10px] font-bold uppercase tracking-wider">VIP</span>
+    </button>
+  </nav>
+
+  <!-- CONFIRM MODAL -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-4 text-xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Confirm Ledger Reset</h3>
+      <p id="confirmMessage" class="mb-6 text-xs text-stone-500 leading-relaxed">
+        Are you sure you want to clear your prediction history? All active neural weight iterations and counters will be reset.
+      </p>
+      <div class="flex gap-3">
+        <button id="modalCancelBtn" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs bg-stone-200/80 text-stone-700 hover:bg-stone-300">
+          Cancel
+        </button>
+        <button id="modalConfirmBtn" class="flex-1 btn-danger text-xs font-bold">
+          Clear Ledger
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS & CORE LOGIC -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <script>
+    // === 3-SECOND LUXURY SPLASH SCREEN ===
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if (splash) splash.classList.add('fade-out');
+      }, 3000);
+    });
+
+    // === RIPPLE & SPARKLE INTERACTIONS ===
+    document.addEventListener('click', function(e) { 
+      createSparkle(e.clientX, e.clientY); 
+    });
+
+    document.querySelectorAll('.ripple-el, button, .card-premium').forEach(el => {
+      el.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple-wave');
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+        ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    function createSparkle(x, y) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = `${x}px`; 
+      s.style.top = `${y}px`;
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 800);
+    }
+
+    // === PARTICLES JS LUXURY PARTICLES ===
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 25, density: { enable: true, value_area: 800 } },
+        color: { value: "#6B7F5B" },
+        shape: { type: "circle" },
+        opacity: { value: 0.35, random: true },
+        size: { value: 3.5, random: true },
+        line_linked: { enable: true, distance: 160, color: "#D9C9B2", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 1.2, direction: "none", random: true, straight: false, out_mode: "out" }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+      }
+    });
+
+    // ==================== FLEXI V8 DOMINATOR ENGINE - ADVANCED EDITION ====================
+    class FlexiV8 {
+        constructor() {
+            this.models = this.initializeModels();
+            this.winStreak = 0;
+            this.lossStreak = 0;
+            this.lastPrediction = null;
+            this.lastNumber = null;
+            this.rewardMatrix = { BIG: { BIG: 0, SMALL: 0 }, SMALL: { BIG: 0, SMALL: 0 } };
+            this.regime = "NEUTRAL";
+            this.engineStats = {};
+            this.patternMemory = [];
+            this.fibonacciSequence = [1, 1, 2, 3, 5, 8, 13, 21, 34];
+            this.marketCycle = 0;
+            this.volatilityIndex = 0;
+            this.consecutiveCorrect = 0;
+            this.consecutiveWrong = 0;
+            this.learningRate = 0.15;
+        }
+
+        initializeModels() {
+            return {
+                transitionalImbalance: { weight: 1.2, locked: false, name: 'Transitional Imbalance', success: 0, total: 0, accuracy: 0 },
+                volatilityCompression: { weight: 1.1, locked: false, name: 'Volatility Compression', success: 0, total: 0, accuracy: 0 },
+                accelerationEngine: { weight: 1.15, locked: false, name: 'Acceleration Engine', success: 0, total: 0, accuracy: 0 },
+                smartStreak: { weight: 1.25, locked: false, name: 'Smart Streak', success: 0, total: 0, accuracy: 0 },
+                deepMemoryScanner: { weight: 1.3, locked: false, name: 'Deep Memory Scanner', success: 0, total: 0, accuracy: 0 },
+                quantumHarmonic: { weight: 1.2, locked: false, name: 'Quantum Harmonic', success: 0, total: 0, accuracy: 0 },
+                fibonacciPredictor: { weight: 1.15, locked: false, name: 'Fibonacci Predictor', success: 0, total: 0, accuracy: 0 },
+                waveletAnalyzer: { weight: 1.1, locked: false, name: 'Wavelet Analyzer', success: 0, total: 0, accuracy: 0 },
+                markovChain: { weight: 1.2, locked: false, name: 'Markov Chain', success: 0, total: 0, accuracy: 0 },
+                neuralEnsemble: { weight: 1.3, locked: false, name: 'Neural Ensemble', success: 0, total: 0, accuracy: 0 }
+            };
+        }
+
+        /* ================= ADVANCED HELPERS ================= */
+        getNumbers(history) {
+            return history.map(h => typeof h === "object" ? parseInt(h.number) : parseInt(h));
+        }
+
+        getOutcomes(history) {
+            return this.getNumbers(history).map(n => n >= 5 ? "BIG" : "SMALL");
+        }
+
+        calculateVolatility(numbers) {
+            if (numbers.length < 10) return 0.5;
+            const returns = [];
+            for (let i = 1; i < numbers.length; i++) {
+                returns.push(Math.abs(numbers[i] - numbers[i-1]));
+            }
+            const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+            const variance = returns.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / returns.length;
+            return Math.min(1, Math.sqrt(variance) / 5);
+        }
+
+        detectCycles(numbers) {
+            if (numbers.length < 20) return 0;
+            const fft = this.simpleFFT(numbers.slice(0, 20));
+            const maxFreq = Math.max(...fft);
+            return maxFreq > 3 ? 1 : 0;
+        }
+
+        simpleFFT(data) {
+            const result = [];
+            for (let i = 0; i < data.length / 2; i++) {
+                let real = 0, imag = 0;
+                for (let j = 0; j < data.length; j++) {
+                    const angle = (2 * Math.PI * i * j) / data.length;
+                    real += data[j] * Math.cos(angle);
+                    imag += data[j] * Math.sin(angle);
+                }
+                result.push(Math.sqrt(real * real + imag * imag));
+            }
+            return result;
+        }
+
+        /* ================= ADVANCED REGIME DETECTION ================= */
+        detectRegime(history) {
+            const outcomes = this.getOutcomes(history);
+            const numbers = this.getNumbers(history);
+            
+            if (outcomes.length < 15) return "NEUTRAL";
+
+            let alternations = 0;
+            for (let i = 1; i < 15; i++)
+                if (outcomes[i] !== outcomes[i-1]) alternations++;
+
+            const bigCount = outcomes.slice(0,15).filter(x=>x==="BIG").length;
+            const volatility = this.calculateVolatility(numbers);
+            const cycleStrength = this.detectCycles(numbers);
+            
+            const trendStrength = Math.abs(bigCount - 7.5) / 7.5;
+            
+            if (volatility > 0.7) return "HIGH_VOLATILITY";
+            if (cycleStrength > 2) return "CYCLICAL";
+            if (alternations >= 12) return "CHOPPY";
+            if (trendStrength > 0.6) return bigCount > 7.5 ? "BULL_TREND" : "BEAR_TREND";
+            if (alternations <= 5) return "SIDEWAYS";
+            
+            return "NEUTRAL";
+        }
+
+        applyRegimeWeightLock() {
+            Object.values(this.models).forEach(m => m.locked = false);
+
+            const regimeMultipliers = {
+                "BULL_TREND": { smartStreak: 1.5, neuralEnsemble: 1.3 },
+                "BEAR_TREND": { smartStreak: 1.5, markovChain: 1.3 },
+                "CHOPPY": { transitionalImbalance: 1.4, quantumHarmonic: 1.4 },
+                "HIGH_VOLATILITY": { volatilityCompression: 1.5, waveletAnalyzer: 1.4 },
+                "CYCLICAL": { fibonacciPredictor: 1.6, deepMemoryScanner: 1.4 },
+                "SIDEWAYS": { markovChain: 1.4, transitionalImbalance: 1.3 },
+                "NEUTRAL": { neuralEnsemble: 1.2, quantumHarmonic: 1.2 }
+            };
+
+            const multipliers = regimeMultipliers[this.regime] || {};
+            Object.entries(multipliers).forEach(([model, mult]) => {
+                if (this.models[model]) {
+                    this.models[model].weight *= mult;
+                    this.models[model].locked = true;
+                }
+            });
+        }
+
+        /* ================= ADVANCED PREDICTION ENGINES ================= */
+        quantumHarmonic(history) {
+            const numbers = this.getNumbers(history);
+            if (numbers.length < 12) return null;
+            
+            const recent = numbers.slice(0, 12);
+            const differences = [];
+            for (let i = 1; i < recent.length; i++) {
+                differences.push(recent[i] - recent[i-1]);
+            }
+            
+            const harmonicSum = differences.reduce((a, b) => a + Math.abs(b), 0);
+            const harmonicMean = harmonicSum / differences.length;
+            
+            if (harmonicMean > 3) {
+                const lastDiff = differences[0];
+                const prediction = Math.abs(lastDiff) > 2 ? 
+                    (lastDiff > 0 ? "BIG" : "SMALL") : 
+                    (recent[0] > 4.5 ? "BIG" : "SMALL");
+                
+                return {
+                    prediction,
+                    confidence: 0.65 + (harmonicMean * 0.05)
+                };
+            }
+            return null;
+        }
+
+        fibonacciPredictor(history) {
+            const numbers = this.getNumbers(history);
+            if (numbers.length < 20) return null;
+            
+            const recent = numbers.slice(0, 8);
+            let patternFound = false;
+            let prediction = null;
+            
+            for (let i = 0; i < this.fibonacciSequence.length - 3; i++) {
+                const pattern = [];
+                for (let j = 0; j < 3; j++) {
+                    if (i + j < this.fibonacciSequence.length) {
+                        pattern.push(this.fibonacciSequence[i + j]);
+                    }
+                }
+                
+                let matches = 0;
+                for (let j = 0; j < Math.min(3, recent.length - 1); j++) {
+                    const diff = Math.abs(recent[j] - recent[j+1]);
+                    if (pattern.includes(Math.round(diff))) {
+                        matches++;
+                    }
+                }
+                
+                if (matches >= 2) {
+                    patternFound = true;
+                    const nextFib = this.fibonacciSequence[i + 3] || 8;
+                    const lastNum = recent[0];
+                    prediction = (lastNum + nextFib) > 4.5 ? "BIG" : "SMALL";
+                    break;
+                }
+            }
+            
+            if (patternFound) {
+                return {
+                    prediction,
+                    confidence: 0.7
+                };
+            }
+            return null;
+        }
+
+        waveletAnalyzer(history) {
+            const numbers = this.getNumbers(history);
+            if (numbers.length < 16) return null;
+            
+            const scales = [2, 4, 8];
+            const patterns = [];
+            
+            scales.forEach(scale => {
+                if (numbers.length >= scale * 2) {
+                    const pattern1 = numbers.slice(0, scale).join('');
+                    const pattern2 = numbers.slice(scale, scale * 2).join('');
+                    
+                    if (pattern1 === pattern2) {
+                        patterns.push({
+                            scale,
+                            direction: numbers[0] > numbers[scale] ? "BIG" : "SMALL"
+                        });
+                    }
+                }
+            });
+            
+            if (patterns.length > 0) {
+                const bigCount = patterns.filter(p => p.direction === "BIG").length;
+                const prediction = bigCount > patterns.length / 2 ? "BIG" : "SMALL";
+                
+                return {
+                    prediction,
+                    confidence: 0.65 + (patterns.length * 0.05)
+                };
+            }
+            return null;
+        }
+
+        markovChain(history) {
+            const outcomes = this.getOutcomes(history);
+            if (outcomes.length < 30) return null;
+            
+            const transitions = {};
+            
+            for (let i = 0; i < outcomes.length - 3; i++) {
+                const state = outcomes.slice(i, i + 3).join('');
+                const next = outcomes[i + 3];
+                
+                if (!transitions[state]) {
+                    transitions[state] = { BIG: 0, SMALL: 0 };
+                }
+                transitions[state][next]++;
+            }
+            
+            const currentState = outcomes.slice(0, 3).join('');
+            const possible = transitions[currentState];
+            
+            if (possible && (possible.BIG + possible.SMALL) > 5) {
+                const total = possible.BIG + possible.SMALL;
+                const bigProb = possible.BIG / total;
+                
+                if (Math.abs(bigProb - 0.5) > 0.2) {
+                    return {
+                        prediction: bigProb > 0.5 ? "BIG" : "SMALL",
+                        confidence: 0.6 + (Math.abs(bigProb - 0.5) * 0.5)
+                    };
+                }
+            }
+            return null;
+        }
+
+        neuralEnsemble(history) {
+            const numbers = this.getNumbers(history);
+            const outcomes = this.getOutcomes(history);
+            
+            if (numbers.length < 25) return null;
+            
+            const features = {
+                momentum: numbers.slice(0, 5).reduce((a, b, i) => a + b * (5 - i), 0) / 15,
+                volatility: this.calculateVolatility(numbers),
+                streak: this.winStreak - this.lossStreak,
+                recentBias: outcomes.slice(0, 10).filter(o => o === "BIG").length / 10,
+                patternMatch: this.detectPatterns(outcomes)
+            };
+            
+            let bigScore = 0, smallScore = 0;
+            
+            if (features.momentum > 4.5) bigScore += 0.7;
+            else if (features.momentum < 4.5) smallScore += 0.7;
+            
+            if (features.volatility > 0.6) {
+                if (outcomes[0] === "BIG") smallScore += 0.5;
+                else bigScore += 0.5;
+            }
+            
+            if (features.recentBias > 0.7) smallScore += 0.4;
+            if (features.recentBias < 0.3) bigScore += 0.4;
+            
+            if (features.streak > 2) {
+                if (this.lastPrediction === "BIG") bigScore += 0.6;
+                else smallScore += 0.6;
+            }
+            
+            const totalScore = bigScore + smallScore;
+            if (totalScore > 0) {
+                const bigProb = bigScore / totalScore;
+                if (Math.abs(bigProb - 0.5) > 0.15) {
+                    return {
+                        prediction: bigProb > 0.5 ? "BIG" : "SMALL",
+                        confidence: 0.6 + (Math.abs(bigProb - 0.5) * 0.5)
+                    };
+                }
+            }
+            return null;
+        }
+
+        detectPatterns(outcomes) {
+            let patternScore = 0;
+            const patterns = [
+                outcomes.slice(0, 2).join(''),
+                outcomes.slice(2, 4).join('')
+            ];
+            
+            if (patterns[0] === patterns[1]) patternScore += 0.3;
+            if (outcomes[0] === outcomes[2]) patternScore += 0.2;
+            if (outcomes[1] === outcomes[3]) patternScore += 0.2;
+            
+            return patternScore;
+        }
+
+        transitionalImbalance(history) {
+            const o = this.getOutcomes(history);
+            if (o.length < 8) return null;
+            
+            const last8 = o.slice(0,8);
+            let alt=0;
+            for (let i=1;i<8;i++) if(last8[i]!==last8[i-1]) alt++;
+            const big = last8.filter(x=>x==="BIG").length;
+            const small = 8-big;
+            
+            if (alt>=5 && Math.abs(big-small)>=2) {
+                const prediction = big>small?"BIG":"SMALL";
+                const confidence = 0.65 + (Math.abs(big-small) * 0.05);
+                return {prediction, confidence: Math.min(confidence, 0.85)};
+            }
+            return null;
+        }
+
+        volatilityCompression(history) {
+            const n=this.getNumbers(history);
+            if(n.length<8)return null;
+            
+            const last7=n.slice(0,7);
+            const range=Math.max(...last7)-Math.min(...last7);
+            const volatility = this.calculateVolatility(n);
+            
+            if(range<=4 || volatility < 0.3) {
+                const direction = n[0] > n[3] ? "BIG" : "SMALL";
+                return {prediction: direction, confidence: 0.72};
+            }
+            return null;
+        }
+
+        accelerationEngine(history){
+            const n=this.getNumbers(history);
+            if(n.length<6)return null;
+            
+            const velocities = [];
+            for(let i=1; i<5; i++) {
+                velocities.push(n[i-1] - n[i]);
+            }
+            
+            const acceleration = velocities[0] - velocities[1];
+            const jerk = velocities[1] - velocities[2];
+            
+            if(Math.abs(acceleration) > 2 || Math.abs(jerk) > 3) {
+                const direction = (acceleration + jerk) > 0 ? "BIG" : "SMALL";
+                return {prediction: direction, confidence: 0.68};
+            }
+            return null;
+        }
+
+        smartStreak(history){
+            const o=this.getOutcomes(history);
+            if(o.length<5)return null;
+            
+            let streak=1;
+            for(let i=1;i<o.length;i++){
+                if(o[i]===o[0])streak++; else break;
+            }
+            
+            if(streak>=3) {
+                const streakProb = 0.5 + (streak * 0.05);
+                return {prediction: o[0], confidence: Math.min(streakProb, 0.85)};
+            }
+            return null;
+        }
+
+        deepMemoryScanner(history) {
+            const outcomes = this.getOutcomes(history);
+            if (outcomes.length < 30) return null;
+
+            const recentPattern = outcomes.slice(0,4).join("");
+            let nextResults = [];
+
+            for (let i = 4; i < outcomes.length - 4; i++) {
+                const segment = outcomes.slice(i,i+4).join("");
+                if (segment === recentPattern) {
+                    nextResults.push(outcomes[i+4]);
+                }
+            }
+
+            if (nextResults.length >= 3) {
+                const big = nextResults.filter(x=>x==="BIG").length;
+                const small = nextResults.length - big;
+                const confidence = 0.6 + (Math.abs(big-small) * 0.05);
+                return {
+                    prediction: big>small?"BIG":"SMALL",
+                    confidence: Math.min(confidence, 0.9)
+                };
+            }
+            return null;
+        }
+
+        /* ================= ADVANCED NUMBER SELECTION ================= */
+        selectOptimalNumber(history, prediction) {
+            const numbers = this.getNumbers(history);
+            
+            if (numbers.length === 0) {
+                return prediction === 'BIG' ? 
+                    [5, 6, 7, 8, 9][Math.floor(Math.random() * 5)] : 
+                    [0, 1, 2, 3, 4][Math.floor(Math.random() * 4)];
+            }
+            
+            const recent = numbers.slice(0, 20);
+            const freq = {};
+            recent.forEach(n => freq[n] = (freq[n] || 0) + 1);
+            
+            if (prediction === 'BIG') {
+                const bigNums = [5, 6, 7, 8, 9];
+                
+                let hotNumber = null;
+                let maxFreq = 0;
+                bigNums.forEach(n => {
+                    if (freq[n] && freq[n] > maxFreq) {
+                        maxFreq = freq[n];
+                        hotNumber = n;
+                    }
+                });
+                
+                let overdueNumber = null;
+                for (let i = 0; i < bigNums.length; i++) {
+                    const num = bigNums[i];
+                    const lastIndex = numbers.indexOf(num);
+                    if (lastIndex > 15) {
+                        overdueNumber = num;
+                        break;
+                    }
+                }
+                
+                if (this.regime === "BULL_TREND" && hotNumber !== null) {
+                    return hotNumber;
+                } else if ((this.regime === "CYCLICAL" || this.regime === "CHOPPY") && overdueNumber !== null) {
+                    return overdueNumber;
+                } else {
+                    const candidates = bigNums.filter(n => recent.includes(n));
+                    if (candidates.length > 0) {
+                        candidates.sort((a, b) => (freq[a] || 0) - (freq[b] || 0));
+                        return candidates[0];
+                    }
+                }
+                
+                return 7;
+            } else {
+                const smallNums = [0, 1, 2, 3, 4];
+                
+                let hotNumber = null;
+                let maxFreq = 0;
+                smallNums.forEach(n => {
+                    if (freq[n] && freq[n] > maxFreq) {
+                        maxFreq = freq[n];
+                        hotNumber = n;
+                    }
+                });
+                
+                let overdueNumber = null;
+                for (let i = 0; i < smallNums.length; i++) {
+                    const num = smallNums[i];
+                    const lastIndex = numbers.indexOf(num);
+                    if (lastIndex > 15) {
+                        overdueNumber = num;
+                        break;
+                    }
+                }
+                
+                if (this.regime === "BEAR_TREND" && hotNumber !== null) {
+                    return hotNumber;
+                } else if ((this.regime === "CYCLICAL" || this.regime === "CHOPPY") && overdueNumber !== null) {
+                    return overdueNumber;
+                } else {
+                    const candidates = smallNums.filter(n => recent.includes(n));
+                    if (candidates.length > 0) {
+                        candidates.sort((a, b) => (freq[a] || 0) - (freq[b] || 0));
+                        return candidates[0];
+                    }
+                }
+                
+                return 2;
+            }
+        }
+
+        /* ================= REINFORCEMENT LEARNING ================= */
+        updateRewardMatrix(actual) {
+            if (!this.lastPrediction) return;
+            this.rewardMatrix[this.lastPrediction][actual] += 1;
+            
+            const totalPredictions = Object.values(this.rewardMatrix).flatMap(Object.values).reduce((a, b) => a + b, 0);
+            if (totalPredictions > 50) {
+                this.learningRate = 0.1;
+            }
+        }
+
+        applyReinforcementBoost(prediction) {
+            const row = this.rewardMatrix[prediction];
+            const total = row.BIG + row.SMALL;
+            if (total < 10) return 1;
+
+            const accuracy = row[prediction] / total;
+            return 1 + (accuracy - 0.5) * 0.6;
+        }
+
+        /* ================= ULTRA AGGRESSIVE STREAK HUNTER ================= */
+        streakHunterBoost(prediction) {
+            let boost = 1;
+            
+            if (this.winStreak >= 2 && prediction === this.lastPrediction) {
+                boost += (this.winStreak * 0.1);
+            }
+            
+            if (this.lossStreak >= 2) {
+                boost += (this.lossStreak * 0.15);
+            }
+            
+            if (this.consecutiveCorrect >= 3) {
+                boost += 0.2;
+            }
+            
+            if (this.consecutiveWrong >= 2) {
+                boost -= 0.1;
+            }
+            
+            return Math.max(0.7, Math.min(1.5, boost));
+        }
+
+        /* ================= FINAL PREDICTION ================= */
+        predict(history) {
+            if (!history) history = [];
+
+            this.regime = this.detectRegime(history);
+            this.applyRegimeWeightLock();
+
+            const allEngines = [
+                ["transitionalImbalance", this.transitionalImbalance(history)],
+                ["volatilityCompression", this.volatilityCompression(history)],
+                ["accelerationEngine", this.accelerationEngine(history)],
+                ["smartStreak", this.smartStreak(history)],
+                ["deepMemoryScanner", this.deepMemoryScanner(history)],
+                ["quantumHarmonic", this.quantumHarmonic(history)],
+                ["fibonacciPredictor", this.fibonacciPredictor(history)],
+                ["waveletAnalyzer", this.waveletAnalyzer(history)],
+                ["markovChain", this.markovChain(history)],
+                ["neuralEnsemble", this.neuralEnsemble(history)]
+            ];
+
+            const engineOutputs = allEngines.filter(e => e[1] !== null);
+
+            engineOutputs.forEach(([name]) => {
+                if (!this.engineStats[name]) {
+                    this.engineStats[name] = { used: 0, successful: 0 };
+                }
+                this.engineStats[name].used++;
+            });
+
+            if (engineOutputs.length === 0) {
+                const numbers = this.getNumbers(history);
+                let fallbackPred;
+                
+                if (numbers.length >= 5) {
+                    const recentOutcomes = this.getOutcomes(history).slice(0, 5);
+                    const bigCount = recentOutcomes.filter(o => o === "BIG").length;
+                    fallbackPred = bigCount >= 3 ? "BIG" : "SMALL";
+                } else {
+                    fallbackPred = Math.random() > 0.5 ? "BIG" : "SMALL";
+                }
+                
+                return {
+                    prediction: fallbackPred,
+                    predictedNumber: fallbackPred === 'BIG' ? 7 : 2,
+                    confidence: 0.5,
+                    signalStrength: "65.0%",
+                    regime: this.regime,
+                    winStreak: this.winStreak,
+                    lossStreak: this.lossStreak,
+                    enginesUsed: 0,
+                    strategy: "FALLBACK_STRATEGY"
+                };
+            }
+
+            let weightedBig = 0, weightedSmall = 0, totalWeight = 0;
+
+            engineOutputs.forEach(([name, result]) => {
+                const baseWeight = this.models[name].weight;
+                const accuracyWeight = this.models[name].total > 0 ? 
+                    (this.models[name].success / this.models[name].total) : 0.5;
+                
+                const combinedWeight = baseWeight * (0.7 + (accuracyWeight * 0.6));
+                
+                if (result.prediction === "BIG") {
+                    weightedBig += result.confidence * combinedWeight;
+                } else {
+                    weightedSmall += result.confidence * combinedWeight;
+                }
+                totalWeight += combinedWeight;
+            });
+
+            let prediction = weightedBig > weightedSmall ? "BIG" : "SMALL";
+            let confidence = Math.max(weightedBig, weightedSmall) / (weightedBig + weightedSmall);
+
+            confidence *= this.applyReinforcementBoost(prediction);
+            confidence *= this.streakHunterBoost(prediction);
+
+            confidence = Math.min(confidence, 0.95);
+            
+            const signalStrength = (confidence * 100).toFixed(1) + '%';
+            const predictedNumber = this.selectOptimalNumber(history, prediction);
+
+            this.lastPrediction = prediction;
+
+            const strategy = this.getStrategyName();
+
+            return {
+                prediction,
+                predictedNumber,
+                confidence,
+                signalStrength,
+                regime: this.regime,
+                winStreak: this.winStreak,
+                lossStreak: this.lossStreak,
+                enginesUsed: engineOutputs.length,
+                strategy
+            };
+        }
+
+        getStrategyName() {
+            const strategies = {
+                "BULL_TREND": "BULL_MASTER",
+                "BEAR_TREND": "BEAR_HUNTER",
+                "CHOPPY": "RANGE_PRO",
+                "HIGH_VOLATILITY": "VOLATILITY_SURFER",
+                "CYCLICAL": "CYCLE_TRADER",
+                "SIDEWAYS": "SIDEWAYS_SPECIALIST",
+                "NEUTRAL": "ADAPTIVE_AI"
+            };
+            
+            return strategies[this.regime] || "QUANTUM_FLEXI";
+        }
+
+        updateAfterResult(actualOutcome, predictionWasCorrect) {
+            if (!this.lastPrediction) return;
+
+            if (predictionWasCorrect) {
+                this.winStreak++;
+                this.lossStreak = 0;
+                this.consecutiveCorrect++;
+                this.consecutiveWrong = 0;
+            } else {
+                this.lossStreak++;
+                this.winStreak = 0;
+                this.consecutiveWrong++;
+                this.consecutiveCorrect = 0;
+            }
+
+            this.updateRewardMatrix(actualOutcome);
+        }
+    }
+
+    // Initialize Engine
+    const flexiV8 = new FlexiV8();
+
+    // ==================== API & Processing System ====================
+    const API_URL = 'https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json';
+    const getResultType = num => parseInt(num,10) >= 5 ? 'BIG' : 'SMALL';
+
+    let predictionHistory = [];
+    let lastCheckedPeriod = null;
+    let wins = 0, losses = 0, jackpots = 0;
+    let lastUpdateTime = new Date();
+    let recentNumbers = [];
+
+    // DOM References (All original IDs preserved)
+    const periodDisplay = document.getElementById('periodDisplay');
+    const predictionDisplay = document.getElementById('predictionDisplay');
+    const historyContainer = document.getElementById('historyContainer');
+    const notifyElement = document.getElementById('predictionNotify');
+    const notifyText = document.getElementById('notifyText');
+    const signalStrengthDisplay = document.getElementById('signalStrengthDisplay');
+    const signalStrengthBar = document.getElementById('signalStrengthBar');
+    const lastUpdateTimeElement = document.getElementById('lastUpdateTime');
+    const statsWins = document.getElementById('statsWins');
+    const statsLosses = document.getElementById('statsLosses');
+    const statsJackpots = document.getElementById('statsJackpots');
+    const statsTotal = document.getElementById('statsTotal');
+    const statsAccuracy = document.getElementById('statsAccuracy');
+    const modelPerformanceList = document.getElementById('modelPerformanceList');
+    const strategyDisplay = document.getElementById('strategyDisplay');
+    const regimeDisplay = document.getElementById('regimeDisplay');
+    const streakDisplay = document.getElementById('streakDisplay');
+    const activeModels = document.getElementById('activeModels');
+    const manipulationStatus = document.getElementById('manipulationStatus');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const confirmModal = document.getElementById('confirmModal');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    const modalConfirmBtn = document.querySelector('#modalConfirmBtn');
+    const closeModalBtn = document.querySelector('.close-modal');
+
+    // Tab Navigation Logic
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${tab}`).classList.add('active');
+        if (tab === 'stats') updateStats();
+      });
+    });
+
+    // Modal Events
+    clearHistoryBtn.addEventListener('click', () => confirmModal.classList.add('open'));
+    [modalCancelBtn, closeModalBtn].forEach(btn => btn.addEventListener('click', () => confirmModal.classList.remove('open')));
+    modalConfirmBtn.addEventListener('click', () => {
+      predictionHistory = []; 
+      wins = 0; 
+      losses = 0; 
+      jackpots = 0;
+      flexiV8.winStreak = 0;
+      flexiV8.lossStreak = 0;
+      flexiV8.lastPrediction = null;
+      flexiV8.rewardMatrix = { BIG: { BIG: 0, SMALL: 0 }, SMALL: { BIG: 0, SMALL: 0 } };
+      recentNumbers = [];
+      Object.values(flexiV8.models).forEach(m => { 
+        m.success = 0; 
+        m.total = 0; 
+      });
+      flexiV8.engineStats = {};
+      updateHistoryDisplay(); 
+      updateStats(); 
+      confirmModal.classList.remove('open');
+      showNotification('Prediction ledger cleared successfully');
+    });
+
+    // Fetch API Data
+    async function fetchHistory() {
+      try {
+        const res = await fetch(`${API_URL}?ts=${Date.now()}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        
+        if (!data?.data?.list?.length) {
+          document.getElementById('apiStatus').innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600"></i> Degraded`;
+          const fallbackPrediction = flexiV8.predict([]);
+          const dummyPeriod = '2024' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+          updateUI(dummyPeriod, fallbackPrediction);
+          return;
+        }
+        
+        const valid = data.data.list.filter(item =>
+          item && item.issueNumber != null && item.number != null && 
+          !isNaN(parseInt(item.number)) && parseInt(item.number) >= 0 && parseInt(item.number) <= 9
+        );
+        
+        if (valid.length === 0) {
+          document.getElementById('apiStatus').innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600"></i> No Data`;
+          const fallbackPrediction = flexiV8.predict([]);
+          const dummyPeriod = '2024' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+          updateUI(dummyPeriod, fallbackPrediction);
+          return;
+        }
+        
+        document.getElementById('apiStatus').innerHTML = `<i class="fa-solid fa-circle-check" style="color: var(--success)"></i> Active Node`;
+        processApiData(valid);
+      } catch (err) {
+        console.error("API Error:", err);
+        document.getElementById('apiStatus').innerHTML = `<i class="fa-solid fa-circle-xmark" style="color: var(--danger)"></i> Error`;
+        
+        const fallbackPrediction = flexiV8.predict([]);
+        const dummyPeriod = '2024' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        updateUI(dummyPeriod, fallbackPrediction);
+        
+        setTimeout(fetchHistory, 5000);
+      }
+    }
+
+    function processApiData(apiResults) {
+      const latest = apiResults[0];
+      if (latest && latest.issueNumber !== lastCheckedPeriod) {
+        lastCheckedPeriod = latest.issueNumber;
+        updatePredictionStatuses(apiResults);
+        
+        const nextPeriod = (BigInt(latest.issueNumber) + 1n).toString();
+        const actualNumber = parseInt(latest.number,10);
+        
+        if (!isNaN(actualNumber)) {
+          recentNumbers.unshift(actualNumber);
+          if (recentNumbers.length > 50) recentNumbers.pop();
+        }
+        
+        const newPred = flexiV8.predict(apiResults);
+        
+        if (!predictionHistory.some(p => p.period === nextPeriod)) {
+          predictionHistory.unshift({
+            period: nextPeriod,
+            prediction: newPred.prediction,
+            predictedNumber: newPred.predictedNumber,
+            status: 'pending',
+            signal: newPred.signalStrength,
+            regime: newPred.regime,
+            strategy: newPred.strategy
+          });
+        }
+        
+        if (predictionHistory.length > 50) predictionHistory.pop();
+        updateUI(nextPeriod, newPred);
+        showNotification(`Generated: ${newPred.prediction} [${newPred.predictedNumber}]`);
+      }
+      
+      lastUpdateTime = new Date();
+      lastUpdateTimeElement.textContent = lastUpdateTime.toLocaleTimeString();
+    }
+
+    function updatePredictionStatuses(apiResults) {
+      predictionHistory.forEach(p => {
+        if (p.status === 'pending') {
+          const match = apiResults.find(r => r.issueNumber === p.period);
+          if (match) {
+            const actualType = getResultType(match.number);
+            const actualNum = parseInt(match.number,10);
+            const isWin = p.prediction === actualType;
+            const isJackpot = isWin && p.predictedNumber === actualNum;
+            
+            p.status = isWin ? 'win' : 'loss';
+            p.actual = actualType;
+            p.actualNumber = actualNum;
+            p.isJackpot = isJackpot;
+            
+            flexiV8.updateAfterResult(actualType, isWin);
+            
+            if (isJackpot) { 
+              jackpots++; 
+              wins++;
+              showNotification(`JACKPOT HIT ON PERIOD ${p.period.slice(-4)}!`, 'jackpot');
+            }
+            else if (isWin) { 
+              wins++; 
+            }
+            else { 
+              losses++; 
+            }
+            
+            Object.keys(flexiV8.models).forEach(engineName => {
+              const engine = flexiV8.models[engineName];
+              if (engine.total) {
+                engine.total++;
+                if (isWin || isJackpot) {
+                  engine.success++;
+                }
+              }
+            });
+          }
+        }
+      });
+      
+      updateStats();
+    }
+
+    function updateUI(nextPeriod, newPred) {
+      periodDisplay.textContent = nextPeriod.slice(-4);
+      predictionDisplay.innerHTML = `<span class="text-3xl font-extrabold">${newPred.predictedNumber}</span> <span class="text-xl uppercase font-semibold">${newPred.prediction}</span>`;
+      
+      // Luxury Forest / Terracotta state styling
+      if (newPred.prediction === 'BIG') {
+        predictionDisplay.style.background = 'linear-gradient(135deg, #2E3A2F, #485B4A)';
+        predictionDisplay.style.color = '#F8F6EE';
+      } else {
+        predictionDisplay.style.background = 'linear-gradient(135deg, #A85337, #C96F4F)';
+        predictionDisplay.style.color = '#FFFFFF';
+      }
+      
+      const strengthValue = parseFloat(newPred.signalStrength);
+      signalStrengthDisplay.textContent = `${newPred.signalStrength} (${newPred.regime})`;
+      signalStrengthDisplay.style.color = strengthValue >= 75 ? 'var(--success)' : 
+                                         strengthValue >= 60 ? 'var(--secondary)' : '#78716c';
+      signalStrengthBar.style.width = newPred.signalStrength;
+      
+      const manipulation = detectManipulation(recentNumbers.length > 0 ? 
+        recentNumbers.map(n => ({ number: n.toString() })) : []);
+      manipulationStatus.textContent = manipulation.risk;
+      manipulationStatus.style.color = manipulation.risk === 'High' ? 'var(--danger)' : 
+                                      manipulation.risk === 'Medium' ? 'var(--accent)' : 'var(--success)';
+      
+      regimeDisplay.textContent = newPred.regime;
+      strategyDisplay.textContent = newPred.strategy;
+      streakDisplay.textContent = `${flexiV8.winStreak}W / ${flexiV8.lossStreak}L`;
+      
+      updateHistoryDisplay();
+      updateStats();
+    }
+
+    function detectManipulation(history) {
+      if (!history || history.length < 10) return { isManipulated: false, risk: 'Low' };
+      
+      const outcomes = history.map(h => parseInt(h.number,10) >= 5 ? 'BIG' : 'SMALL');
+      const numbers = history.map(h => parseInt(h.number,10));
+      
+      const bigCount = outcomes.filter(o => o === 'BIG').length;
+      const smallCount = outcomes.length - bigCount;
+      const pBig = bigCount / outcomes.length;
+      const pSmall = smallCount / outcomes.length;
+      
+      let entropy = 0;
+      if (pBig > 0) entropy -= pBig * Math.log2(pBig);
+      if (pSmall > 0) entropy -= pSmall * Math.log2(pSmall);
+      entropy = entropy / Math.log2(2);
+      
+      let maxStreak = 1;
+      let currentStreak = 1;
+      for (let i = 1; i < outcomes.length; i++) {
+        if (outcomes[i] === outcomes[i-1]) {
+          currentStreak++;
+          maxStreak = Math.max(maxStreak, currentStreak);
+        } else {
+          currentStreak = 1;
+        }
+      }
+      
+      const numFreq = {};
+      numbers.forEach(n => numFreq[n] = (numFreq[n] || 0) + 1);
+      const maxNumFreq = Math.max(...Object.values(numFreq));
+      
+      if (entropy < 0.7 || maxStreak > 7 || maxNumFreq > numbers.length * 0.3) {
+        return { isManipulated: true, risk: 'High' };
+      } else if (entropy < 0.8 || maxStreak > 5 || maxNumFreq > numbers.length * 0.25) {
+        return { isManipulated: false, risk: 'Medium' };
+      }
+      
+      return { isManipulated: false, risk: 'Low' };
+    }
+
+    function updateHistoryDisplay() {
+      if (predictionHistory.length === 0) {
+        historyContainer.innerHTML = `<p class="text-center py-10 text-stone-400"><i class="fa-solid fa-inbox mb-2 text-3xl"></i><br/>No prediction history yet.</p>`;
+        return;
+      }
+      
+      historyContainer.innerHTML = predictionHistory.map(item => {
+        let itemClass = 'history-item';
+        if (item.isJackpot) itemClass += ' jackpot-item';
+        else if (item.status === 'win') itemClass += ' win-item';
+        else if (item.status === 'loss') itemClass += ' loss-item';
+        else itemClass += ' pending-item';
+        
+        const icon = item.isJackpot ? 'fa-crown' : 
+                    item.status === 'win' ? 'fa-trophy' : 
+                    item.status === 'loss' ? 'fa-xmark' : 'fa-clock';
+        
+        const iconColor = item.isJackpot ? 'var(--gold)' : 
+                         item.status === 'win' ? 'var(--success)' : 
+                         item.status === 'loss' ? 'var(--danger)' : 'var(--secondary)';
+        
+        const actualText = item.actual ? 
+          `<span class="font-bold ${item.isJackpot ? 'text-amber-600' : 'text-stone-800'}">${item.actual} ${item.actualNumber}</span>` : 
+          '<span class="text-stone-400">pending</span>';
+        
+        return `
+          <div class="${itemClass}">
+            <div>
+              <p class="font-extrabold text-sm tracking-wide text-stone-800">Period ${item.period.slice(-4)}</p>
+              <p class="text-xs text-stone-500 mt-0.5">
+                Target: <strong>${item.prediction} ${item.predictedNumber}</strong> · Result: ${actualText}
+              </p>
+              <p class="text-[11px] text-stone-400 mt-1 font-mono">Conf: ${item.signal} · ${item.strategy}</p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center bg-white/70 shadow-sm">
+              <i class="fa-solid ${icon}" style="color: ${iconColor}; font-size: 1.2rem;"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateStats() {
+      const total = wins + losses;
+      const accuracy = total > 0 ? ((wins / total) * 100).toFixed(1) : '0.0';
+      
+      statsWins.textContent = wins;
+      statsLosses.textContent = losses;
+      statsJackpots.textContent = jackpots;
+      statsTotal.textContent = total;
+      statsAccuracy.textContent = accuracy + '%';
+      
+      const engines = Object.entries(flexiV8.models).map(([key, model]) => {
+        const total = model.total || 0;
+        const success = model.success || 0;
+        const rate = total > 0 ? ((success / total) * 100).toFixed(1) : '0.0';
+        return { name: model.name, rate, total };
+      }).sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+      
+      modelPerformanceList.innerHTML = engines.map(engine => {
+        const rateVal = parseFloat(engine.rate);
+        return `
+          <div class="flex justify-between items-center py-1 border-b border-black/5 last:border-0">
+            <span class="text-xs font-medium text-stone-600">${engine.name}</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono font-bold" style="color: ${rateVal >= 50 ? 'var(--success)' : 'var(--danger)'}">
+                ${engine.rate}%
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      const activeCount = Object.values(flexiV8.models).filter(m => m.total > 0).length;
+      activeModels.textContent = `${activeCount}/10`;
+    }
+
+    function showNotification(msg, type = 'normal') {
+      notifyText.textContent = msg;
+      if (type === 'jackpot') {
+        notifyElement.id = 'jackpotNotify';
+        notifyElement.innerHTML = `<i class="fa-solid fa-crown text-xl text-amber-300"></i><span>${msg}</span>`;
+      } else {
+        notifyElement.id = 'predictionNotify';
+        notifyElement.innerHTML = `<i class="fa-solid fa-atom text-lg" style="color: var(--tertiary);"></i><span>${msg}</span>`;
+      }
+      notifyElement.classList.add('show');
+      setTimeout(() => notifyElement.classList.remove('show'), 3200);
+    }
+
+    function init() {
+      const initialPrediction = flexiV8.predict([]);
+      const initialPeriod = '2024' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      updateUI(initialPeriod, initialPrediction);
+      
+      fetchHistory();
+      setInterval(fetchHistory, 3000);
+      
+      updateStats();
+      lastUpdateTimeElement.textContent = lastUpdateTime.toLocaleTimeString();
+    }
+
+    init();
+  </script>
+
+<!-- Telegram Channel Join Dialog -->
+<div id="telegramJoinDialog" class="fixed inset-0 z-[99999] hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+  <div class="w-full max-w-sm rounded-2xl border border-white/15 bg-slate-900/95 p-6 text-center shadow-2xl">
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500/15 text-blue-400">
+      <i class="fab fa-telegram-plane text-2xl"></i>
+    </div>
+    <h3 class="text-xl font-bold text-white">Join Our Telegram Channel</h3>
+    <p class="mt-2 text-sm text-slate-300">
+      Latest updates, announcements and important information ke liye hamare Telegram channel ko join karein.
+    </p>
+    <div class="mt-5 flex gap-3">
+      <button id="telegramCancelBtn" type="button"
+        class="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white">
+        Cancel
+      </button>
+      <a id="telegramJoinBtn" href="https://t.me/+wRWyuhK0WzxjYjVl" target="_blank" rel="noopener noreferrer"
+        class="flex-1 rounded-xl bg-blue-500 px-4 py-3 text-sm font-bold text-white">
+        Join
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const dialog = document.getElementById('telegramJoinDialog');
+  const cancelBtn = document.getElementById('telegramCancelBtn');
+
+  // Intercept the existing Telegram button/link and show the dialog first.
+  document.querySelectorAll('a[href="https://t.me/+wRWyuhK0WzxjYjVl"]').forEach(function (link) {
+    // Keep the actual Join button inside the dialog working normally.
+    if (link.id === 'telegramJoinBtn') return;
+
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      dialog.classList.remove('hidden');
+      dialog.classList.add('flex');
+    });
+  });
+
+  cancelBtn.addEventListener('click', function () {
+    dialog.classList.add('hidden');
+    dialog.classList.remove('flex');
+  });
+
+  dialog.addEventListener('click', function (e) {
+    if (e.target === dialog) {
+      dialog.classList.add('hidden');
+      dialog.classList.remove('flex');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
